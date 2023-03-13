@@ -8,5 +8,16 @@
     "createdAt": "2023-02-07T18:15:01.196Z",
     "version": "5.5.0",
     "commit": "a63a770ea33332882790401851df337734b0b734"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .js test/",
+    "pretest": "npm run eslint",
+    "test": "jest --verbose --coverage"
+  },
+  "dependencies": {
+    "eslint": "^8.35.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
