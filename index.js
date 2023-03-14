@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const mdLinks = (path, options) => {
-  return new Promise((resolve, reject)=>{
+  // console.log(mdLinks(path, options));
+    return new Promise((resolve, reject)=>{
     if (path) {
       // Verifica si la ruta o camino especificado en "path" es válido o no. 
       if (Api.isPathValid(path)) {
@@ -12,6 +13,7 @@ const mdLinks = (path, options) => {
         }
         // Obtener información sobre la ruta especificada
         const stats = Api.pathFileStat(path);
+        // console.log(stats(path));
         // Verificar si es un directorio o archivo
         if (stats.isDirectory()) {
           // Buscar el archivo dentro del directorio
@@ -33,7 +35,7 @@ const mdLinks = (path, options) => {
             resolve([]);//Si no tiene extensión .md, se resuelve la promesa vacía [].
           }
         } else {
-          reject(new Error(`La ruta especificada no es un archivo ni un directorio: ${path}`));
+          reject(new Error(`La ruta especificada no es un archivo ni un directorio: ${path}`)); //${} es una forma de interpolación de cadenas de texto en JavaScript que permite combinar cadenas de texto con expresiones evaluadas dentro de llaves
         }
       } else {
         reject(new Error(`La ruta especificada no es válida: ${path}`));
