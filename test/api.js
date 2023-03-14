@@ -43,3 +43,13 @@ const isDirectory = (path) => {
     const extname = path.extname(fileName);
     return extname === '.md';
   }
+
+  module.exports = {
+    isPathValid,
+    isAbsolute,
+    toAbsolutePath,
+    stats,
+    isDirectory,
+    files,
+    mdFiles
+  }
