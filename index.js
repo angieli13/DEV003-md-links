@@ -4,8 +4,8 @@ const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     if (!Api.isPathValid(path)) {
       reject(`La ruta especificada no es valida: ${path}`);
-    } else if (Api.isAbsolute(path)) {
-      reject(`La ruta especificada no es relativa: ${path}`);
+    } else if (!Api.isAbsolute(path)) {
+      reject(`La ruta especificada no es absoluta: ${path}`);
     } else if (!Api.isDirectory(path) && !Api.isFile(path)) {
       reject(`La ruta especificada no es un archivo: ${path}`);
     } else {
@@ -19,7 +19,7 @@ const mdLinks = (path, options) => {
       const links = [];
       mdFiles.forEach(mdFile => {
         const mdContent = Api.readMd(mdFile);
-        const fileLinks = extractLinks(mdContent);
+        const fileLinks = Api.extractLinks(mdContent);
         fileLinks.forEach(link => {
           links.push({
             file: mdFile,
