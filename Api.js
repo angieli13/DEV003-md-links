@@ -34,10 +34,10 @@ const isDirectory = path => fs.statSync(path).isDirectory();
 //console.log(isDirectory('C:/Users/yilib/Documents/ProyectosLAB/DEV003-md-links'))
 
 //Buscar el archivo dentro del directorio
-const getFilesMd = path => fs.readdirSync(path);
+const getMdFiles = path => fs.readdirSync(path);
 //console.log(Searchfiles(isDirectory('C:/Users/yilib/Documents/ProyectosLAB/DEV003-md-links')))
 
-// Identificar si el archivo tiene extensión .md, los filtro y los retorno en un array
+// Identificar los archivos con extensión .md, los filtro y los retorno en un array
 const mdFiles = path => fs.readdirSync(path)
     .filter (file => path.extname(file) === '.md');
 //console.log('MD', mdFiles('prueba'))
@@ -46,23 +46,29 @@ const mdFiles = path => fs.readdirSync(path)
 const readMd = pathMd => fs.readFileSync(pathMd, 'utf-8');
 //console.log(readMd(mdFiles(prueba)))
 
-//Crear función para extraer los links (http) de los archivos .md tener encuenta si tiene carpetas llamar funcion dentro de la función
-const extractLinks = (path) => {//Toma como parámetro una cadena de texto en formato Markdown.
-  const regEx = /\[(.+)\]\((http[s]?:\/\/.+)\)/g;//Expresión regular para buscar patrones que corresponden a la sintaxis de un enlace en Markdown,(.+) corresponde al texto del enlace y otro grupo de captura que corresponde a la dirección URL del enlace.
-  const links = []; //Arreglo vacío que almacenará los enlaces encontrados.
-  const mdContent = readMd(path);
-  let match;//Almacena el resultado de cada búsqueda de coincidencias.
-  while ((match = regEx.exec(mdContent)) !== null) {//Devuelve un arreglo que contiene información sobre la primera coincidencia encontrada en la cadena de texto. Si no se encuentra ninguna coincidencia, el método devuelve null.
-    links.push({//Dentro del ciclo while, se agrega un nuevo objeto al arreglo links, que contiene dos propiedades text y href.
-      text: match[1], //contiene el texto del enlace
-      href: match[2],//contiene la URL del enlace
-      file: toAbsolutePath(path),
-    });
-  }
 
+//Función para extraer los links (http) de los archivos .md que se encuentren en directorios y subdirectorios
+const extractLinks = (path) => {
+  const links = [];//Arreglo vacío que almacenará los enlaces encontrados.
+  const files = mdFiles(path); // Obtener todos los archivos .md del directorio y subdirectorios
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i]; 
+    const filePath = path.join(path, file); //join une la ruta del directorio con el nombre del archivo en cada iteración del ciclo for.
+    const mdContent = readMd(filePath); // Leer el contenido del archivo
+    const regEx = /\[(.+)\]\((http[s]?:\/\/.+)\)/g; // Expresión regular para buscar patrones de enlaces
+    let match;//Almacena el resultado de cada búsqueda de coincidencias.
+    while ((match = regEx.exec(mdContent)) !== null) {//Devuelve un arreglo que contiene información sobre la primera coincidencia encontrada en la cadena de texto. Si no se encuentra ninguna coincidencia, el método devuelve null.
+      links.push({//Dentro del ciclo while, se agrega un nuevo objeto al arreglo links, que contiene dos propiedades text y href.
+        text: match[1],//contiene el texto del enlace
+        href: match[2],//contiene la URL del enlace
+        file: convertToAbsolutePath(filePath), // Obtener la ruta absoluta del archivo
+      });
+    }
+  }
   return links;
-};
+}
 //console.log(extractLinks('C:/Users/yilib/Documents/ProyectosLAB/DEV003-md-links/README.md'))
+
 
 module.exports = {
   isPathValid,
@@ -71,6 +77,7 @@ module.exports = {
   convertToAbsolutePath,
   isDirectory,
   getFilesMd,
+  getMdFiles,
   isFile,
   mdFiles,
   readMd,
