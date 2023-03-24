@@ -2,31 +2,25 @@ const Api = require('./Api.js');
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
-    const absolutePath = convertToAbsolutePath(path);
-    if (!isPathValid(absolutePath)) {
+    const absolutePath = Api.convertToAbsolutePath(path);
+    if (!Api.isPathValid(absolutePath)) {
       reject(new Error('La ruta especificada no es válida'));
-    } else if (isFile(absolutePath)) {
-      const mdContent = readMd(absolutePath);
-      const links = extractLinks(absolutePath, mdContent);
+    } else if (Api.isFile(absolutePath)) {
+      const mdContent = Api.readMd(absolutePath);
+      const links = Api.extractLinks(absolutePath, mdContent);
       resolve(links);
-    } else if (isDirectory(absolutePath)) {
-      const mdFilesArr = mdFiles(absolutePath);
-      const allLinksArr = mdFilesArr.map(mdFile => {
-        const mdFilePath = path.join(absolutePath, mdFile);
-        const mdContent = readMd(mdFilePath);
-        return extractLinks(mdFilePath, mdContent);
-      });
-      const allLinks = [].concat(...allLinksArr);
+    } else if (Api.isDirectory(absolutePath)) {
+     
       resolve(allLinks);
     }
   });
 };
 
 module.exports = { mdLinks };
-mdLinks('README.txt').then((result) => {
+/*mdLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
   console.log(result);
 
 })
   .catch((Error) => {
     console.log(Error)
-  });
+  });*/
