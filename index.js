@@ -2,25 +2,31 @@ const Api = require('./Api.js');
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
+    if (!Api.isPathValid(path)) {
+      reject(new Error('La ruta ingresada no es válida'));
+    }
     const absolutePath = Api.convertToAbsolutePath(path);
-    if (!Api.isPathValid(absolutePath)) {
-      reject(new Error('La ruta especificada no es válida'));
-    } else if (Api.isFile(absolutePath)) {
-      const mdContent = Api.readMd(absolutePath);
-      const links = Api.extractLinks(absolutePath, mdContent);
-      resolve(links);
+    if (Api.isFile(absolutePath)) {
+      if (!Api.identificaFileMd(absolutePath)) {
+        reject(new Error('No es un archivo .md'));
+      }
+      const linksMdFile = Api.extractLinksFileMd(absolutePath);
+      resolve(linksMdFile);
     } else if (Api.isDirectory(absolutePath)) {
-     
-      resolve(allLinks);
+      const linksMdFiles = Api.extractLinks(absolutePath);
+      resolve(linksMdFiles);
+    } else {
+      reject(new Error('La ruta ingresada no es un archivo .md ni un directorio'));
     }
   });
 };
 
+
 module.exports = { mdLinks };
-/*mdLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
+mdLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
   console.log(result);
 
 })
   .catch((Error) => {
     console.log(Error)
-  });*/
+  });
