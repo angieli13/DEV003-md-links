@@ -11,10 +11,6 @@ const isPathValid = path => fs.existsSync(path)
 const isAbsolute = route => path.isAbsolute(route);
 //console.log('¿Es absoluto?',isAbsolute('README.md'));
 
-//--------- Convertir el path en Absoluto 
-//const toAbsolutePath = absolutePath => path.resolve(absolutePath);
-//console.log('Ruta relativa convertida',toAbsolutePath('README.md'));
-
 //---------- verifica si la ruta es relativa antes de realizar la conversión y retorna la ruta absoluta
 const convertToAbsolutePath = (route) => {
   if (!path.isAbsolute(route)) {//para asegurar que el método path.resolve() solo se utilice para convertir rutas relativas a rutas absolutas.
@@ -40,18 +36,6 @@ const mdFiles = route => fs.readdirSync(route)//lee el contenido del path y devu
   .filter(file => path.extname(file) === '.md');//crear un nuevo array solo con nombres de los archivos.md, extname para obtener la extensión.
 //console.log('MD', mdFiles('prueba'))
 
-//----------Obtener todos los archivos .md del directorio y subdirectorios
-/*const getMdFiles = (dirPath) => {
-  const mdFiles = mdFiles(dirPath);
-  return mdFiles.map((file) => {
-    return path.join(dirPath, file);
-  });
-}*/
-//Leer el contenido de todos los archivos .md
-/*const readAllMdFiles = getMdFiles.map(function(filePath) {
-  return readMd(filePath);
-});*/
-
 //---------Lee el contenido de un path y lo devuelve como una cadena de texto 
 const readMd = (pathMd) => {
   return new Promise((resolve, reject) => {
@@ -65,6 +49,7 @@ const readMd = (pathMd) => {
   });
 }
 //console.log(readMd(prueba))
+
 //----------Función para extraer links de un archivo .md
 const extractLinksFileMd = (filePath) => {
   const links = []; // Arreglo vacío que almacenará los enlaces encontrados.
@@ -148,7 +133,6 @@ module.exports = {
   isFile,
   identificaFileMd,
   extractLinksFileMd,
-  //readAllMdFiles,
   mdFiles,
   readMd,
   extractLinks

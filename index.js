@@ -23,10 +23,10 @@ const mdLinks = (path, options) => {
 
 
 module.exports = { mdLinks };
-mdLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
+/*mdLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
   console.log(result);
 
 })
   .catch((Error) => {
     console.log(Error)
-  });
+  });*/
