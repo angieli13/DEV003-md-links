@@ -82,7 +82,7 @@ describe('isDirectory', () => {
     });
 });
 
-//----------Test para la función readMd
+//----------Test para la función que Lee el contenido de un file y lo devuelve como una cadena de texto 
 describe('readMd', () => {
     const validFilePath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md';
     const invalidPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida';
@@ -98,34 +98,151 @@ describe('readMd', () => {
     });
 
     it('Debería resolver la promesa con el contenido del archivo .md', () => {
-        const expectedContent = [  
-            {
-              text: "# Creando un archivo .md"
-            },
-        {
-            text: "Markdown",
-            href: "https://es.wikipedia.org/wiki/Markdown",
-            file: validFilePath
-          },
-          {
-            text: "Nodejs",
-            href: "https://nodejs.org/en/docs",
-            file: validFilePath,
-          },
-          {
-            text: "Doesn't exist",
-            href: "https://developer.mozilla/",
-            file: validFilePath
-          },
-        ];
+        const expectedContent = "# Creando un archivo .md\n[Markdown](https://es.wikipedia.org/wiki/Markdown),\n[Nodejs](https://nodejs.org/en/docs),\n[Doesn't exist](https://developer.mozilla/)";
         return Api.readMd(validFilePath).then(content => {
+            console.log(content)
+            console.log(expectedContent)
+            expect(content.toString()).toEqual(expectedContent);
+
+
+        });
+
+    });
+});
+
+//----------test para la función que lee el contenido del directorio y devuelve una promesa que se resuelve con un arreglo de los nombres de los archivos y subdirectorios dentro del directorio dirPath.
+
+describe('readDir', () => {
+    const validDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas';
+    const invalidDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida';
+
+    it('Debe ser una función', () => {
+        expect(typeof Api.readDir).toBe('function');
+    });
+
+    it('Debería rechazar la promesa si se ingresa una ruta de directorio inválida', () => {
+        return Api.readDir(invalidDirPath).catch(error => {
+            expect(error.message).toBe("ENOENT: no such file or directory, scandir 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida'"
+            );
+        });
+    });
+
+    it('devuelve una promesa que se rechaza si el directorio no existe', () => {
+        const expectedContent = ["directory", "example.txt", "exampleFile.md", "README.md"];
+        return Api.readDir(validDirPath).then(content => {
             expect(content).toEqual(expectedContent);
+
+
+        });
+
+    });
+});
+
+//---------Test para Función que extrae los links (http) de los archivos .md que se encuentren en directorios y subdirectorios
+
+describe('extractLinksFileMd', () => {
+    const validFilePath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md';
+    const invalidFilePath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida.md';
+
+    it('Debería ser una función', () => {
+        expect(typeof Api.extractLinksFileMd).toBe('function');
+    });
+
+    it('Debería rechazar la promesa si se ingresa una ruta de archivo inválida', () => {
+        return Api.extractLinksFileMd(invalidFilePath).catch(error => {
+            expect(error.message).toBe("ENOENT: no such file or directory, open 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida.md'");
+        });
+    });
+
+    it('Debería extraer los enlaces de un archivo .md y devolver una promesa con un arreglo de objetos con las propiedades text, href y file', () => {
+        const expectedLinks = [
+            {
+                text: 'Markdown',
+                href: 'https://es.wikipedia.org/wiki/Markdown',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            },
+            {
+                text: 'Nodejs',
+                href: 'https://nodejs.org/en/docs',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            },
+            {
+                text: "Doesn't exist",
+                href: 'https://developer.mozilla/',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            }
+        ]
+        return Api.extractLinksFileMd(validFilePath).then(links => {
+            expect(links).toEqual(expectedLinks);
         });
     });
 });
 
 
+describe('extractLinks', () => {
+    const validDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas';
+    const invalidDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida';
 
+    it('Debería ser una función', () => {
+        expect(typeof Api.extractLinks).toBe('function');
+    });
 
+    it('Debería rechazar la promesa si se ingresa una ruta de directorio inválida', () => {
+        return Api.extractLinks(invalidDirPath).catch(error => {
+            expect(error.message).toBe("ENOENT: no such file or directory, scandir 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida'");
+        });
+    });
 
-
+    it('Debería extraer todos los enlaces http de los archivos .md en un directorio y sus subdirectorios, devolviendo una promesa con un arreglo de objetos con las propiedades text, href y file', () => {
+        const expectedLinks = [
+            {
+                text: 'Markdown',
+                href: 'https://es.wikipedia.org/wiki/Markdown',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            },
+            {
+                text: 'Nodejs',
+                href: 'https://nodejs.org/en/docs',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            },
+            {
+                text: "Doesn't exist",
+                href: 'https://developer.mozilla/',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md'
+            },
+            {
+                text: 'Node.js',
+                href: 'https://nodejs.org/es/',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md'
+            },
+            {
+                text: 'motor de JavaScript V8 de Chrome',
+                href: 'https://developers.google.com/v8/',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md'
+            },
+            {
+                text: 'promesas',
+                href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md'
+            },
+            {
+                text: 'página web',
+                href: 'https://angieli13.github.io/DEV003-data-lovers/',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md'
+            },
+            {
+                text: 'html',
+                href: 'https://es.wikipedia.org/wiki/HTML',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md'
+            },
+            {
+                text: '404',
+                href: 'https://angieli13.github.io/DEV003',
+                file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md'
+            }
+        ]
+        return Api.extractLinks(validDirPath).then(links => {
+            expect(links).toEqual(expectedLinks);
+        });
+    });
+});
