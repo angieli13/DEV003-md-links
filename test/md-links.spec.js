@@ -25,79 +25,100 @@ describe('mdLinks', () => {
   it('Debería resolver la promesa con los links encontrados en un archivo .md', () => {
     const expectedLinks = [
       {
-        text: "Markdown",
-        href: "https://es.wikipedia.org/wiki/Markdown",
-        file: validFilePath
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: 'Markdown',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
-        text: "Nodejs",
-        href: "https://nodejs.org/en/docs",
-        file: validFilePath,
+        href: 'https://nodejs.org/en/docs',
+        text: 'Nodejs',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
+        href: 'https://developer.mozilla/',
         text: "Doesn't exist",
-        href: "https://developer.mozilla/",
-        file: validFilePath
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 400,
+        statusText: 'fail'
       },
-
     ];
     return mdLinks(validFilePath).then(links => {
-      expect(links).toEqual(expectedLinks);
+      expect(links).toBe(expectedLinks);
     });
   });
 
   it('debería resolver la promesa con los links encontrados en todos los archivos .md de un directorio', () => {
     const expectedLinks = [
       {
-        text: "Markdown",
-        href: "https://es.wikipedia.org/wiki/Markdown",
-        file: validFilePath
-      },
-      {
-        text: "Nodejs",
-        href: "https://nodejs.org/en/docs",
-        file: validFilePath,
-      },
-      {
+        href: 'https://developer.mozilla/',
         text: "Doesn't exist",
-        href: "https://developer.mozilla/",
-        file: validFilePath
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 400,
+        statusText: 'fail'
       },
       {
-        text: "Node.js",
-        href: "https://nodejs.org/es/",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md",
+        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises',
+        text: 'promesas',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
-        text: "motor de JavaScript V8 de Chrome",
-        href: "https://developers.google.com/v8/",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md"
+        href: 'https://nodejs.org/en/docs',
+        text: 'Nodejs',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
-        text: "promesas",
-        href: "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md"
+        href: 'https://angieli13.github.io/DEV003',
+        text: '404',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+        status: 404,
+        statusText: 'Not Found'
       },
       {
-        text: "página web",
-        href: "https://angieli13.github.io/DEV003-data-lovers/",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md"
+        href: 'https://angieli13.github.io/DEV003-data-lovers/',
+        text: 'página web',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
-        text: "html",
-        href: "https://es.wikipedia.org/wiki/HTML",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md"
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: 'Markdown',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+        status: 200,
+        statusText: 'OK'
       },
       {
-        text: "404",
-        href: "https://angieli13.github.io/DEV003",
-        file: "C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md"
+        href: 'https://es.wikipedia.org/wiki/HTML',
+        text: 'html',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+        status: 200,
+        statusText: 'OK'
       },
+      {
+        href: 'https://nodejs.org/es/',
+        text: 'Node.js',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md',
+        status: 200,
+        statusText: 'OK'
+      },
+      {
+        href: 'https://developers.google.com/v8/',
+        text: 'motor de JavaScript V8 de Chrome',
+        file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md',
+        status: 200,
+        statusText: 'OK'
+      }
     ];
     return mdLinks(validDirPath).then(links => {
-      expect(links).toEqual(expectedLinks);
+      expect(links).toBe(expectedLinks);
     });
-  });
-
-  
+  });  
 });

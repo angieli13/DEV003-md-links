@@ -122,74 +122,169 @@ const extractLinks = (dirPath) => {
               const subDirPath = path.join(dirPath, subDir);
               return extractLinks(subDirPath); // Llama recursivamente a la función extractLinks y devuelve una promesa
             });
-      return Promise.all(subDirPromises)
-        .then((subDirLinks) => {
-          // Agrega los links encontrados en las subcarpetas al arreglo links
-          for (let i = 0; i < subDirLinks.length; i++) {
-            const linksInSubDir = subDirLinks[i];
-            links.push(...linksInSubDir);//Agrega todos los elementos del arreglo linksInSubDir al final del arreglo links
-          }
-          return links;
+          return Promise.all(subDirPromises)
+            .then((subDirLinks) => {
+              // Agrega los links encontrados en las subcarpetas al arreglo links
+              for (let i = 0; i < subDirLinks.length; i++) {
+                const linksInSubDir = subDirLinks[i];
+                links.push(...linksInSubDir);//Agrega todos los elementos del arreglo linksInSubDir al final del arreglo links
+              }
+              return links;
+            });
         });
     });
-  });
 };
 
-extractLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
+/*extractLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
   console.log(result);
 })
   .catch((Error) => {
     console.log(Error)
-  });
+  });*/
 
-  const validateLinks = (links) => {
-    //console.log(links)
-    return new Promise((resolve) => {
-      let validatedLinks = [];
-     // console.log('soy validateLinks')
-      for (let i = 0; i < links.length; i++) {
-        fetch(links[i].href)
-          .then(res => {
-            validatedLinks.push({
-              href: links[i].href,
-              text: links[i].text,
-              file: links[i].file,
-              status: res.status,
-              statusText: res.statusText,
-            });
-            if (validatedLinks.length === links.length) {
-             // console.log(validateLinks)
-              resolve(validatedLinks);
-            }
-          })
-          .catch(error => {
-            validatedLinks.push({
-              href: links[i].href,
-              text: links[i].text,
-              file: links[i].file,
-              status: error.status || 400,
-              statusText: "fail",
-            });
-            if (validatedLinks.length === links.length) {
-              resolve(validatedLinks);
-            }
+//----------Función que valida los links encontrados
+const validateLinks = (links) => {
+  //console.log(links)
+  return new Promise((resolve) => {
+    let validatedLinks = [];
+    // console.log('soy validateLinks')
+    for (let i = 0; i < links.length; i++) {
+      fetch(links[i].href)
+        .then(res => {
+          validatedLinks.push({
+            href: links[i].href,
+            text: links[i].text,
+            file: links[i].file,
+            status: res.status,
+            statusText: res.statusText,
           });
-      }
-    });
-  };
-  
-  /*extractLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas')
-  .then(links => validateLinks(links))
-  .then(validatedLinks => console.log(validatedLinks))
-  .catch(error => console.log(error));*/
+          if (validatedLinks.length === links.length) {
+            // console.log(validateLinks)
+            resolve(validatedLinks);
+          }
+        })
+        .catch(error => {
+          validatedLinks.push({
+            href: links[i].href,
+            text: links[i].text,
+            file: links[i].file,
+            status: error.status || 400,
+            statusText: "fail",
+          });
+          if (validatedLinks.length === links.length) {
+            resolve(validatedLinks);
+          }
+        });
+    }
+  });
+};
 
+/*extractLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas')
+.then(links => validateLinks(links))
+.then(validatedLinks => console.log(validatedLinks))
+.catch(error => console.log(error));*/
+
+
+/*validateLinks ('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas').then((result) => {
+  console.log(result);
+})
+  .catch((Error) => {
+    console.log(Error)
+  });*/
   
-  /*validateLinks(extractLinks('C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas')).then((result) => {
-    console.log(result);
-  })
-    .catch((Error) => {
-      console.log(Error)
-    });*/
+
+const links = [
+  {
+    href: 'https://developer.mozilla/',
+    text: "Doesn't exist",
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+    status: 400,
+    statusText: 'fail'
+  },
+  {
+    href: 'https://nodejs.org/en/docs',
+    text: 'Nodejs',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises',
+    text: 'promesas',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://es.wikipedia.org/wiki/HTML',
+    text: 'html',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://angieli13.github.io/DEV003',
+    text: '404',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+    status: 404,
+    statusText: 'Not Found'
+  },
+  {
+    href: 'https://angieli13.github.io/DEV003-data-lovers/',
+    text: 'página web',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\directory\\archivoDirectorio.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://es.wikipedia.org/wiki/Markdown',
+    text: 'Markdown',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\exampleFile.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://nodejs.org/es/',
+    text: 'Node.js',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md',
+    status: 200,
+    statusText: 'OK'
+  },
+  {
+    href: 'https://developers.google.com/v8/',
+    text: 'motor de JavaScript V8 de Chrome',
+    file: 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas\\README.md',
+    status: 200,
+    statusText: 'OK'
+  }
+];
+//---------Función que suma los links totales
+const totalLinks = (links) => {
+  const total = links.length;
+  return total;
+};
+//console.log(totalLinks(links));//9 ok
+
+//----------Links únicos
+const uniqueLinks = (links) => {
+  const unique = [...new Set(links.map((link) => link.href))];
+  return unique.length;
+};
+//console.log(uniqueLinks(links));//9 ok
+/*Calcula la cantidad de links únicos a partir de una lista de objetos links. 
+Primero se usa el método map para crear una nueva lista con solo
+ los valores href de cada objeto link. Luego, se crea un Set a partir de esta lista
+  para eliminar los valores duplicados, y se convierte nuevamente a un array usando
+   el operador spread .... Finalmente, se retorna el tamaño de este array, que 
+   representa la cantidad de links únicos en la lista original.*/
+
+//----------LINKS ROTOS
+const brokenLinks = (links) => {
+  const broken = links.filter((link) => link.status !== 200);
+  return broken.length;
+};
+//console.log(brokenLinks(links));//2 ok
+
 module.exports = {
   isPathValid,
   isAbsolute,
@@ -202,5 +297,8 @@ module.exports = {
   readMd,
   readDir,
   extractLinks,
-  validateLinks
+  validateLinks,
+  totalLinks,
+  uniqueLinks,
+  brokenLinks
 }

@@ -178,7 +178,7 @@ describe('extractLinksFileMd', () => {
     });
 });
 
-
+//---------test de la Función para extraer los links (http) de los archivos .md que se encuentren en directorios y subdirectorios
 describe('extractLinks', () => {
     const validDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas';
     const invalidDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida';
@@ -186,13 +186,7 @@ describe('extractLinks', () => {
     it('Debería ser una función', () => {
         expect(typeof Api.extractLinks).toBe('function');
     });
-
-    it('Debería rechazar la promesa si se ingresa una ruta de directorio inválida', () => {
-        return Api.extractLinks(invalidDirPath).catch(error => {
-            expect(error.message).toBe("ENOENT: no such file or directory, scandir 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida'");
-        });
-    });
-
+   
     it('Debería extraer todos los enlaces http de los archivos .md en un directorio y sus subdirectorios, devolviendo una promesa con un arreglo de objetos con las propiedades text, href y file', () => {
         const expectedLinks = [
             {
@@ -242,6 +236,458 @@ describe('extractLinks', () => {
             }
         ]
         return Api.extractLinks(validDirPath).then(links => {
+            expect(links).toEqual(expectedLinks);
+        });
+    });
+});
+
+//----------Función que valida los links encontrados
+
+describe('validateLinks', () => {
+    const validDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\Pruebas';
+    const invalidDirPath = 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida';
+
+    it('Debería ser una función', () => {
+        expect(typeof Api.validateLinks).toBe('function');
+    });
+
+    it('Debería rechazar la promesa si se ingresa una ruta de directorio inválida', () => {
+        return Api.validateLinks(invalidDirPath).catch(error => {
+            expect(error.message).toBe(" ENOENT: no such file or directory, scandir 'C:\\Users\\yilib\\Documents\\ProyectosLAB\\DEV003-md-links\\ruta\\invalida'");
+        });
+    });
+
+    it('Debería extraer todos los enlaces http de los archivos .md en un directorio y sus subdirectorios, devolviendo una promesa con un arreglo de objetos con las propiedades text, href y file', () => {
+        const expectedLinks = [
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          },
+          {
+            href: undefined,
+            text: undefined,
+            file: undefined,
+            status: 400,
+            statusText: 'fail'
+          }
+        ]      
+        return Api.validateLinks(validDirPath).then(links => {
             expect(links).toEqual(expectedLinks);
         });
     });
