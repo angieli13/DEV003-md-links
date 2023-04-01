@@ -9,7 +9,7 @@
     "version": "5.5.0",
     "commit": "a63a770ea33332882790401851df337734b0b734"
   },
-  "description": "npm library developed to validate search for md files within a directory, find the links in md format and check if they are still valid",
+  "description": "Library in charge of reading and parsing files in Markdown format, to verify the links they contain and report statistics (if the links work well or if they are broken).",
   "main": "./CLI.js",
   "directories": {
     "test": "test"
@@ -19,6 +19,14 @@
     "pretest": "npm run eslint",
     "test": "jest --verbose --coverage"
   },
+  "keywords": [
+    "http",
+    "links",
+    "markdown",
+    "NodeJs"
+  ],
+  "author": "Angie Cómbita",
+  "license": "ISC",
   "bin": {
     "AngieLi-md-links": "./CLI.js"
   },
@@ -29,5 +37,9 @@
   },
   "devDependencies": {
     "jest": "^27.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angieli13/DEV003-md-links"
   }
 }
