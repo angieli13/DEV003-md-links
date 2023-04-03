@@ -1,6 +1,6 @@
 {
   "name": "md-links-angieli",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "engines": {
     "node": ">=16.x"
   },

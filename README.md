@@ -37,7 +37,8 @@ A flowchart was elaborated to organize the development path of this project.
 
 ## 4. Installation
 
-You can install md-links-angieli through npm:                                   
+You can install md-links-angieli through npm:  
+`npm install md-links-angieli`                                 
 
 ## 5. Commands
 
