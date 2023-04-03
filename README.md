@@ -1,3 +1,5 @@
+![md-links-angieli](./example/mdLinks.png)
+
 # Markdown Links
 
 ## Content
@@ -7,7 +9,8 @@
 * [3. Development process](#3-development-process)
 * [4. Installation](#4-Installation)
 * [5. Commands](#5-Commands)
-* [6. Author](#6-author)
+* [6. Errors](#6-errors)
+* [7. Author](#6-author)
 
 
 ***
@@ -19,27 +22,28 @@ platforms that handle plain text (GitHub, forums, blogs, ...) and it is very com
 (starting with the traditional `README.md`).
 
 These `Markdown` files usually contain _links_ (links) which are often broken or no longer
-are often broken or no longer valid and this greatly impairs the value of the information you want to
-the information to be shared.
+are often broken or no longer valid and this greatly impairs the value of the information you want to the information to be shared.
 
 Within an open source community, I have been proposed to create a tool using Node.js , that reads and analyzes files in `Markdown` format, to verify the links they contain and report some statistics.
 
  ## 2. About md-links-angieli
 
-Angie-li-md-links is a library that uses [Node.js] to extract the links found in a Markdown (.md) file. In turn displaying some properties of the links: The file path, URL, status, status code (with this property we will know if the link is broken), the link text, if it has been validated and report some statistics.
+md-links-angieli is a library that uses [Node.js] to extract the links found in a Markdown (.md) file. In turn displaying some properties of the links: The file path, URL, status, status code (with this property we will know if the link is broken), the link text, if it has been validated and report some statistics.
 
 ## 3. Development process
+
 A flowchart was elaborated to organize the development path of this project.
 ![Flowchart](./example/Diagrama.png)
 
 ## 4. Installation
+
 You can install md-links-angieli through npm:                                   
 
 ## 5. Commands
 
 You must access the terminal and run the command:
 
-````md-links``` or ```md-links --help```` .
+`md-links` or `md-links --help` .
 
 This first command will show us the directions to follow to run the program and the options that exist.
 
@@ -47,7 +51,7 @@ This first command will show us the directions to follow to run the program and 
 ![Undefined or help](./example/instructions.png)
 
 
-##### `--validate`
+##### `--validate` or `--v`
 
 If we pass the `--validate` option, the module should make an HTTP request to
 find out if the link works or not. If the link results in a redirect to a
@@ -56,20 +60,33 @@ URL that responds ok, then we will consider the link as ok.
 #### Example:
 ![--validate or --v](./example/validate.png)
 
-##### `--stats`
+
+##### `--stats` or `--s`
 
 If we pass the `--stats` option the output will be a text with statistics
 Basics about links.
+
 #### Example:
 ![--stats or --s](./example/stats.png)
 
-##### `--stats` `--validate` 
+
+##### `--stats` `--validate` or `--s` `--v`
 We can also combine `--stats` and `--validate` to get statistics that
 need the validation results.
+
 #### Example:
 ![--stats --validate](./example/stats%26validate.png)
 
-## 6. Autora
+
+## 6. Errors
+
+The program will indicate if it doesn't write any command.
+
+#### Example:
+![Mensaje de error](./example/error.png)
+
+
+## 7. Author
 
 Angie Liliana Cómbita Martínez
 
