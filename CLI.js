@@ -8,7 +8,7 @@ var colors = require('colors/safe');
 const emoji = require('node-emoji');
 const argv = process.argv;//Asigna los argumentos de línea de comando
 const path = process.argv[2];
-console.log(process.argv)
+//console.log(process.argv)
 
 
 function cli() {
@@ -31,6 +31,7 @@ function cli() {
   }
   else if (stats && validate) {
     return mdLinks(path, { validate: validate, stats }).then((links) => {
+      console.log(colors.rainbow('\nESTADÍSTICAS QUE NECESITAN DE LOS RESULTADOS DE LA VALIDACIÓN'+ "✍️"));
       console.log(colors.bgMagenta('\nTOTAL LINKS  :') + (colors.bgBlue(totalLinks(links))));
       console.log(colors.bgMagenta('\nUNIQUE LINKS :') + (colors.bgBlue(uniqueLinks(links))));
       console.log(colors.bgMagenta('\nBROKEN LINKS :') + (colors.bgBlue(brokenLinks(links))));
@@ -40,6 +41,7 @@ function cli() {
 
   } else if (stats && !validate) {
     return mdLinks(path, { validate: stats }).then((links) => {
+      console.log(colors.rainbow('\nESTADÍSTICAS BÁSICAS SOBRE LOS LINKS'+ "✍️"));
       console.log(colors.bgMagenta('\nTOTAL LINKS  :') + (colors.bgBlue(totalLinks(links))));
       console.log(colors.bgMagenta('\nUNIQUE LINKS :') + (colors.bgBlue(uniqueLinks(links))));
       console.log((colors.rainbow('\n================================= AngieLi MD-links')) + "👩🏻‍💻" + (colors.rainbow('=================================')));
