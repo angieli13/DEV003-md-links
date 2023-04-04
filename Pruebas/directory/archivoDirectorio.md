@@ -7,4 +7,4 @@ las siguientes propiedades
 [promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises)
 [página web](https://angieli13.github.io/DEV003-data-lovers/)
 [html](https://es.wikipedia.org/wiki/HTML)
-[404](https://angieli13.github.io/DEV003)
+[Doesn't exist](https://angieli13.github.io/DEV003)

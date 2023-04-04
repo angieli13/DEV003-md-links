@@ -28,7 +28,7 @@
   "author": "Angie Cómbita",
   "license": "ISC",
   "bin": {
-    "AngieLi-md-links": "./CLI.js"
+    "md-links": "./CLI.js"
   },
   "dependencies": {
     "colors": "^1.4.0",

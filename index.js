@@ -1,15 +1,16 @@
 const Api = require('./Api.js');
+var colors = require('colors/safe');
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     if (!Api.isPathValid(path)) {
-      reject(new Error('La ruta ingresada no es válida'));
+      reject(new Error(colors.yellow('The path is invalid .')));
     }
     const absolutePath = Api.convertToAbsolutePath(path);
     let result
     if (Api.isFile(absolutePath)) {
       if (!Api.identificaFileMd(absolutePath)) {
-        reject(new Error('No es un archivo .md'));
+        reject(new Error(colors.yellow('Not an .md file .')));
       }
       const linksMdFile = Api.extractLinksFileMd(absolutePath);
       result = linksMdFile;
@@ -17,7 +18,7 @@ const mdLinks = (path, options) => {
       const linksMdFiles = Api.extractLinks(absolutePath);
       result = linksMdFiles;//se convierte en promesa
     } else {
-      reject(new Error('La ruta ingresada no es un archivo .md ni un directorio'));
+      reject(new Error(colors.yellow('The path entered is neither an .md file nor a directory .')));
     }
     if (!options.validate) {//condición que verifica si la propiedad validate en el objeto options es falsa o no definida.
       resolve(result)

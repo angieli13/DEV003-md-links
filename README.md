@@ -61,6 +61,11 @@ URL that responds ok, then we will consider the link as ok.
 #### Example:
 ![--validate or --v](./example/validate.png)
 
+If your path does not have broken links, the following message will be displayed:
+
+#### Example:
+![--validate or --v](./example/validateok.png)
+
 
 ##### `--stats` or `--s`
 
@@ -76,8 +81,14 @@ We can also combine `--stats` and `--validate` to get statistics that
 need the validation results.
 
 #### Example:
-![--stats --validate](./example/stats%26validate.png)
+![--stats --validate](./example/v-s.png)
 
+
+##### `--all` 
+If you type the command `--all`, you will see all the links in the path with four properties: href, text, file and status.
+
+#### Example:
+![--stats --validate](./example/allLinks.png)
 
 ## 6. Errors
 
@@ -85,6 +96,12 @@ The program will indicate if it doesn't write any command.
 
 #### Example:
 ![Mensaje de error](./example/error.png)
+
+Below you can see other possible errors.
+
+#### Example:
+![Mensaje de error](./example/pathInvalid.png)
+![Mensaje de error](./example/notFile.png)
 
 
 ## 7. Author
